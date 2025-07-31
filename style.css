@@ -650,6 +650,7 @@ body {
   color: #cc7a29;
 }
 
+
 @media (max-width: 600px) {
   .modal-content {
     max-width: 95vw;

@@ -326,14 +326,24 @@ const subs = [
 ];
 
       subs.forEach(sub => {
-        const col = document.createElement("div");
-        col.className = "col category-col";
-        col.innerHTML = `
-          <div class="category-card" data-name="${sub.name}">
-            <i class="${sub.icon}"></i>
-            <span>${sub.name}</span>
-          </div>`;
-        subCatGrid.append(col);
+       const col = document.createElement("div");
+  col.className = "col category-col d-flex flex-column align-items-center";
+
+  // अब innerHTML में कार्ड और बटन दोनों डालें
+  col.innerHTML = `
+    <div class="category-card" data-name="${sub.name}">
+      <i class="${sub.icon}"></i>
+      <span>${sub.name}</span>
+    </div>
+    <a href="${subcatVideos[sub.name]}"
+       class="download-btn neumorphic-button mt-3"
+       download
+    >
+      <i class="fas fa-download"></i>
+      Download Video
+    </a>
+  `;
+  subCatGrid.append(col);
 
         const card = col.querySelector(".category-card");
         card.addEventListener("click", () => {
