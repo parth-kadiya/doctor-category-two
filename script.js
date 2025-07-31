@@ -195,7 +195,7 @@ next2Btn.addEventListener("click", event => {
 
   const templates = [
     { name: "Template 1", icon: "fas fa-file-alt", key: "template1" },
-    { name: "Template 2", icon: "fas fa-file-pdf",  key: "template2" }
+    { name: "Template 2", icon: "fas fa-file-alt",  key: "template2" }
   ];
 
   templates.forEach(t => {
