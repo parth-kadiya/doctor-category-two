@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Categories Wizard</title>
+
+    <!-- Fonts & Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Bootstrap (optional) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="cropper.min.css" />
+
+    <!-- Your CSS file -->
+    <link rel="stylesheet" href="form.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+     <input type="radio" name="form-toggle" id="toggle-login" checked>
+  <input type="radio" name="form-toggle" id="toggle-signup">
+
+  <!-- 2. Neumorphic login/signup card (initially hidden) -->
+  <div id="authContainer" class="neumorphic neumorphic-card form-container d-none">
+    <div class="form-slider">
+      <!-- LOGIN PANEL -->
+      <div class="form-panel">
+        <div class="spelog">
+<h1>Login</h1>
+<form id="loginForm" novalidate>
+  <input
+    type="email"
+    id="loginEmail"
+    class="neumorphic neumorphic-input"
+    placeholder="Email"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="password"
+    id="loginPassword"
+    class="neumorphic neumorphic-input"
+    placeholder="Password"
+  />
+  <small class="error d-none"></small>
+
+  <button type="button" id="authLoginBtn" class="auth-login-button">
+    Sign In
+  </button>
+</form>
+</div>
+
+        <label for="toggle-signup" class="form-switch">
+          Don’t have an account? <span>Register</span>
+        </label>
+      </div>
+      <!-- SIGNUP PANEL -->
+      <div class="form-panel">
+       <h1>Register</h1>
+<form id="signupForm" novalidate>
+  <input
+    type="text"
+    id="signupName"
+    class="neumorphic neumorphic-input"
+    placeholder="Name"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="email"
+    id="signupEmail"
+    class="neumorphic neumorphic-input"
+    placeholder="Email"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="tel"
+    id="signupPhone"
+    class="neumorphic neumorphic-input"
+    placeholder="Phone"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="text"
+    id="signupDesignation"
+    class="neumorphic neumorphic-input"
+    placeholder="Designation"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="text"
+    id="signupClinic"
+    class="neumorphic neumorphic-input"
+    placeholder="Clinic / Hospital Name"
+  />
+  <small class="error d-none"></small>
+
+  <input
+    type="text"
+    id="signupCity"
+    class="neumorphic neumorphic-input"
+    placeholder="City"
+  />
+  <small class="error d-none"></small>
+
+  <label class="file-wrap" required>
+            <span class="file-button">Choose File</span>
+            <span class="file-text">No file chosen</span>
+            <input
+              type="file"
+              id="file-input"
+              accept=".jpg, .jpeg, .png"
+              required
+            />
+          </label>
+
+          <div class="error-msg photo-error text-danger small mt-1 mb-2"></div>
+
+          <canvas id="cropped-preview" width="150" height="150"> </canvas>
+
+  <button type="button" id="authSignupBtn" class="auth-signup-button">
+    Sign Up
+  </button>
+</form>
+
+
+        <label for="toggle-login" class="form-switch">
+          Already have an account? <span>Login</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="crop-modal" class="modal">
+        <div class="modal-content">
+          <button class="close-modal" aria-label="Close">
+            <i class="fa fa-times"></i>
+          </button>
+          <img id="modal-image-preview" alt="Crop Preview" />
+          <br />
+          <button id="continue-btn">Save & Crop</button>
+        </div>
+      </div>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="full-screen-center">
+      <p class="start-instruction mb-4">Click on Start button</p>
+      <button id="startBtn" class="neumorphic neumorphic-button start-button">
+        <i class="fas fa-play"></i> Start
+      </button>
+    </div>
+
+    <!-- STEP 1: CATEGORY SELECTION -->
+    <div id="step1Screen" class="container py-4 d-none">
+      <!-- Progress bar -->
+      <div class="row mb-2">
+        <div class="col-12">
+          <div class="step-progress-wrapper">
+            <div class="step-progress">
+              <div class="step active">1</div>
+              <div class="step">2</div>
+              <div class="step">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12 text-center">
+          <p class="step-description">Choose your Category</p>
+        </div>
+      </div>
+
+      <!-- Search bar -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="input-group search-wrapper">
+            <span class="input-group-text search-icon">
+              <i class="fas fa-search"></i>
+            </span>
+            <input
+              type="text"
+              id="search"
+              class="form-control search-bar"
+              placeholder="Search categories..."
+              autocomplete="off"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Category grid -->
+      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5">
+        <div class="col category-col" data-name="Diabetes">
+          <div class="category-card">
+            <i class="fas fa-syringe"></i>
+            <span>Diabetes</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Cardiology">
+          <div class="category-card">
+            <i class="fas fa-heartbeat"></i>
+             <span>Cardiology</span>
+            
+          </div>
+        </div>
+        <div class="col category-col" data-name="Allergy & Immunology">
+          <div class="category-card">
+            <i class="fas fa-allergies"></i>
+            <span>Allergy & Immunology</span>
+          </div>
+        </div>
+
+        <div class="col category-col" data-name="Anesthesiology">
+          <div class="category-card">
+            <i class="fas fa-procedures"></i>
+            <span>Anesthesiology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Dermatology">
+          <div class="category-card">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>Dermatology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Emergency Medicine">
+          <div class="category-card">
+            <i class="fas fa-ambulance"></i>
+            <span>Emergency Medicine</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Endocrinology">
+          <div class="category-card">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>Endocrinology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Family Medicine">
+          <div class="category-card">
+            <i class="fas fa-user-friends"></i>
+            <span>Family Medicine</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Gastroenterology">
+          <div class="category-card">
+            <i class="fas fa-utensils"></i>
+            <span>Gastroenterology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="General Surgery">
+          <div class="category-card">
+            <i class="fas fa-cut"></i>
+            <span>General Surgery</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Medical Genetics">
+          <div class="category-card">
+            <i class="fas fa-dna"></i>
+            <span>Medical Genetics</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Neurology & Neurosurgery">
+          <div class="category-card">
+            <i class="fas fa-brain"></i>
+            <span>Neurology & Neurosurgery</span>
+          </div>
+        </div>
+        <div
+          class="col category-col"
+          data-name="Obstetrics & Gynecology (OB/GYN)"
+        >
+          <div class="category-card">
+            <i class="fas fa-baby"></i>
+            <span>OB/GYN</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Ophthalmology">
+          <div class="category-card">
+            <i class="fas fa-eye"></i>
+            <span>Ophthalmology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Orthopaedics">
+          <div class="category-card">
+            <i class="fas fa-bone"></i>
+            <span>Orthopaedics</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="ENT (Otolaryngology)">
+          <div class="category-card">
+            <i class="fas fa-head-side-mask"></i>
+            <span>ENT</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Pathology">
+          <div class="category-card">
+            <i class="fas fa-microscope"></i>
+            <span>Pathology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Pediatrics">
+          <div class="category-card">
+            <i class="fas fa-baby-carriage"></i>
+            <span>Pediatrics</span>
+          </div>
+        </div>
+        <div
+          class="col category-col"
+          data-name="Physical Medicine & Rehabilitation"
+        >
+          <div
+            class="col category-col"
+            data-name="Physical Medicine & Rehabilitation"
+          >
+            <div class="category-card">
+              <i class="fas fa-wheelchair"></i>
+              <span>Physical Medicine & Rehabilitation</span>
+            </div>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Plastic Surgery">
+          <div class="category-card">
+            <i class="fas fa-cut"></i>
+            <span>Plastic Surgery</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Oncology">
+          <div class="category-card">
+            <i class="fas fa-ribbon"></i>
+            <span>Oncology</span>
+          </div>
+        </div>
+
+        <div class="col category-col" data-name="Psychiatry">
+          <div class="category-card">
+            <i class="fas fa-user-md"></i>
+            <span>Psychiatry</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Radiology">
+          <div class="category-card">
+            <i class="fas fa-x-ray"></i>
+            <span>Radiology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Rheumatology">
+          <div class="category-card">
+            <i class="fas fa-hand-holding-medical"></i>
+            <span>Rheumatology</span>
+          </div>
+        </div>
+        <div class="col category-col" data-name="Urology">
+          <div class="category-card">
+            <i class="fas fa-droplet"></i>
+            <span>Urology</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="d-flex justify-content-between my-4">
+        <div></div>
+        <!-- no Previous on first step -->
+        <button id="nextBtn" class="next-btn">
+          Next <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+<!-- STEP 2: SUB-CATEGORY SELECTION -->
+    <div id="step2Screen" class="container py-4 d-none">
+      <!-- Progress bar -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="step-progress-wrapper">
+            <div class="step-progress">
+              <div class="step done">1</div>
+              <div class="step active">2</div>
+              <div class="step">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <div class="row mb-3">
+    <div class="col-12 text-center">
+      <p class="step-description">Choose a Sub‑category</p>
+    </div>
+  </div>
+
+   <div id="subCategoryGrid" class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
+    <!-- JS will inject .category-col > .category-card here -->
+  </div>
+
+   <div id="noSubCatMsg" class="text-center mt-5 d-none">
+    <p>No Sub category found</p>
+  </div>
+
+      <!-- Navigation buttons -->
+      <div class="d-flex justify-content-between my-4">
+        <button id="prevBtn" class="next-btn">
+          <i class="fas fa-arrow-left"></i> Previous
+        </button>
+        <button id="next2Btn" class="next-btn">
+          Next <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: USER DETAILS FORM -->
+    <!-- STEP 3: USER DETAILS FORM -->
+    <div id="step3Screen" class="container py-4 d-none">
+      <!-- Progress bar -->
+      <div class="row mb-2">
+        <div class="col-12">
+          <div class="step-progress-wrapper">
+            <div class="step-progress">
+              <div class="step done">1</div>
+              <div class="step done">2</div>
+              <div class="step active">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="row mb-3">
+    <div class="col-12 text-center">
+      <p class="step-description">Choose a Template</p>
+    </div>
+  </div>
+
+    <div id="templateGrid" class="row row-cols-2 row-cols-md-3 g-4 justify-content-center">
+    <!-- JS will inject .category-card template entries here -->
+  </div>
+
+
+      <!-- WRAPPER WITH .form-card -->
+ 
+      <div class="d-flex justify-content-between mt-4">
+        <button id="prev3Btn" class="next-btn">
+          <i class="fas fa-arrow-left"></i> Previous
+        </button>
+        <button id="next3Btn" class="next-btn">
+          Next <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+
+
+    <!-- CUSTOM “PLEASE CHOOSE” MODAL -->
+    <div id="noCategoryOverlay" class="modal-overlay d-none"></div>
+    <div id="noCategoryModal" class="modal-box d-none">
+      <div class="modal-content p-4 text-center">
+        <p>Please choose a category before proceeding.</p>
+        <button id="modalOkBtn" class="btn btn-primary mt-3">OK</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 “PLEASE CHOOSE SUB‑CATEGORY” MODAL -->
+<div id="noSubCatOverlay" class="modal-overlay d-none"></div>
+<div id="noSubCatModal" class="modal-box d-none">
+  <div class="modal-content p-4 text-center">
+    <p>Please choose a sub‑category before proceeding.</p>
+    <button id="modalSubCatOkBtn" class="btn btn-primary mt-3">OK</button>
+  </div>
+</div>
+
+<!-- STEP 2 “PLEASE CHOOSE TEMPLATE” MODAL -->
+<div id="noTemplateOverlay" class="modal-overlay d-none"></div>
+<div id="noTemplateModal" class="modal-box d-none">
+  <div class="modal-content p-4 text-center">
+    <p>Please choose a template before proceeding.</p>
+    <button id="modalTemplateOkBtn" class="btn btn-primary mt-3">OK</button>
+  </div>
+</div>
+
+
+
+
+    <!-- PHOTO REQUIRED MODAL -->
+    <div id="noPhotoOverlay" class="modal-overlay d-none"></div>
+    <div id="noPhotoModal" class="modal-box d-none">
+      <div class="modal-content p-4 text-center">
+        <p>Please upload a photo before proceeding.</p>
+        <button id="modalPhotoOkBtn" class="btn btn-primary mt-3">OK</button>
+      </div>
+    </div>
+
+    <!-- THANK YOU SCREEN (hidden by default) -->
+    <!-- नया THANK YOU SCREEN -->
+    <div
+      id="thankYouScreen"
+      class="container py-4 d-none text-center"
+      style="color: #fff"
+    >
+      <!-- Progress bar ठीक वैसा ही जैसा STEP 1 में -->
+      <div class="row mb-2">
+        <div class="col-12">
+          <div class="step-progress-wrapper">
+            <div class="step-progress">
+              <div class="step done"></div>
+              <div class="step done"></div>
+              <div class="step done"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- अब आपका Thank You मैसेज -->
+      <div
+        class="form-card"
+        style="
+          background: transparent;
+          box-shadow: none;
+          padding: 0;
+          margin-top: 2rem;
+        "
+      >
+        <h2>All steps completed!</h2>
+        <p>Thank You</p>
+      </div>
+    </div>
+
+    <!-- VIDEO POPUP MODAL -->
+<div id="videoModal" class="modal-overlay d-none">
+  <div class="modal-box video-modal-box">
+    <button id="closeVideoBtn" class="close-modal">
+      <i class="fas fa-times"></i>
+    </button>
+    <video id="subcatVideo" controls autoplay>
+      <source src="" type="video/mp4" />
+      आपका ब्राउज़र वीडियो टैग सपोर्ट नहीं करता।
+    </video>
+  </div>
+</div>
+
+    <!-- Bootstrap & your JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="cropper.min.js.download"></script>
+    <script src="jquery-3.5.1.min.js.download"></script>
+    <script src="script.js"></script>
+    <script src="2_.js"></script>
+    <script>
+      function validateLogin() {
+  let valid = true;
+  [
+    { id: "loginEmail", msg: "Please enter your email" },
+    { id: "loginPassword", msg: "Please enter your password" }
+  ].forEach(f => {
+    const inp = document.getElementById(f.id),
+          err = inp.nextElementSibling;
+    if (!inp.value.trim()) {
+      err.textContent = f.msg;
+      err.classList.remove("d-none");
+      valid = false;
+    } else {
+      err.classList.add("d-none");
+    }
+  });
+  return valid;
+}
+authLoginBtn.addEventListener("click", () => {
+  if (validateLogin()) enterWizard();
+});
+
+function validateSignup() {
+  let valid = true;
+  [
+    { id: "signupName",        msg: "Please enter your name"        },
+    { id: "signupEmail",       msg: "Please enter your email"       },
+    { id: "signupPhone",       msg: "Please enter your phone"       },
+    { id: "signupPassword",    msg: "Please enter a password"       },
+    { id: "signupDesignation", msg: "Please enter your designation" },
+    { id: "signupClinic",      msg: "Please enter your clinic name" },
+    { id: "signupCity",        msg: "Please enter your city"        }
+  ].forEach(f => {
+    const inp = document.getElementById(f.id),
+          err = inp.nextElementSibling;
+    if (!inp.value.trim()) {
+      err.textContent = f.msg;
+      err.classList.remove("d-none");
+      valid = false;
+    } else {
+      err.classList.add("d-none");
+    }
+  });
+  return valid;
+}
+authSignupBtn.addEventListener("click", () => {
+  if (validateSignup()) enterWizard();
+});
+
+    </script>
+  </body>
+</html>

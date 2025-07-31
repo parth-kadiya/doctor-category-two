@@ -1,0 +1,670 @@
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* 2. Desktop background */
+body {
+  /* replace with your desktop‑size image path */
+  background-image: url("desktop.png");
+  background-size: cover;             /* scale to cover entire area */
+  background-position: center center; /* center it */
+  background-repeat: no-repeat;       /* no tiling */
+  background-attachment: fixed;       /* fixed on scroll */
+}
+
+
+.neumorphic {
+  background: #8dafdd;
+  border-radius: 30px;
+  box-shadow: 10px 10px 20px #1752aa, -10px -10px 20px #3a4b68;
+  border: none;
+  outline: none;
+}
+
+.search-bar {
+  padding: 15px 20px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding-left: 0.5rem;
+  
+}
+.search-bar:focus,
+.search-bar:hover {
+  box-shadow: inset 10px 10px 20px #a3b1c6, inset -10px -10px 20px #ffffff;
+}
+
+
+
+.search-wrapper {
+  box-shadow: 10px 10px 20px #1752aa, -10px -10px 20px #3a4b68;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search-icon {
+  background: #8dafdd;
+  border: none;
+  outline: none;
+}
+
+.neumorphic-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: auto;            /* ← allow it to size to its content */
+  /* you can still keep the height rule or remove it if you don’t want a fixed height */
+  height: 100px;
+  /* … */
+}
+
+/* Copy of .category-card.selected but scoped to any .selected inside .neumorphic-button */
+.neumorphic-button.selected {
+   background: #ff9800;
+  color: #fff;
+  box-shadow: inset 10px 10px 20px #c97c08,
+              inset -10px -10px 20px #ffffff;
+}
+
+.neumorphic-button i {
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+/* सिर्फ non‑selected buttons पर hover इफ़ेक्ट */
+.neumorphic-button:not(.selected):hover {
+  box-shadow: inset 10px 10px 20px #1f5099,
+              inset -10px -10px 20px #ffffff;
+  transform: scale(1.05);    /* अगर आप scale भी चाहते हैं */
+}
+
+/* selected buttons पर बिलकुल कोई hover बदलाव नहीं */
+.neumorphic-button.selected:hover {
+  box-shadow: inset 10px 10px 20px #c97c08,
+              inset -10px -10px 20px #ffffff; /* ये आपके selected का वैसा ही shadow है */
+  transform: none;
+}
+
+
+.full-screen-center {
+  display: flex;
+  flex-direction: column;      /* ← यहां एड कर दिया */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.neumorphic-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: auto;            /* ← allow it to size to its content */
+  /* you can still keep the height rule or remove it if you don’t want a fixed height */
+  height: 100px;
+  /* … */
+}
+
+/* ==== auth buttons reuse old .neumorphic-button rules ==== */
+.auth-login-button,
+.auth-signup-button {
+  /* same as .neumorphic-button */
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border-radius: 12px;
+
+  /* you may still want the neumorphic background,
+     so you can also include that if needed: */
+  background: #8dafdd;
+  box-shadow: 10px 10px 20px #1752aa, -10px -10px 20px #3a4b68;
+  border: none;
+  outline: none;
+}
+
+.auth-login-button:hover,
+.auth-signup-button:hover {
+  box-shadow: inset 10px 10px 20px #1f5099,
+              inset -10px -10px 20px #ffffff
+}
+
+/* Now explicitly size only the Start button: */
+.start-button {
+  padding: 20px 50px;     /* keeps your original Start dimensions */
+  font-size: 1.5rem;
+  border-radius: 30px;
+  display: inline-flex;   /* shrink‑wrap around its content */
+  height: auto;           /* let it grow naturally with padding */
+}
+
+
+.step-progress-wrapper {
+  text-align: center;
+}
+
+.step-progress {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.step-progress::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  right: 18px;
+  height: 4px;
+  background: #ff9800;
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.step {
+   position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  background: #f0ce9b;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px;
+  font-weight: bold;
+  color: white;
+  transition: background 0.3s ease;
+ 
+}
+
+.step.done {
+  background: #ff9800;
+   color: transparent;    /* नंबर का रंग छुपा देगा */
+ font-size: 0;          /* नंबर के लिए जगह नहीं छोड़ेगा */
+}
+
+.step.done::after {
+  content: "\f00c";              /* FontAwesome check */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.step.active {
+  background: #ff9800;
+}
+
+.category-col {
+  /* ensure each column will stretch to same height */
+  display: flex;
+}
+
+.category-card {
+    width: 100%;              /* fill column width */
+  max-width: 200px;         /* optional cap, adjust as needed */
+  height: 100px;            /* fixed height for all cards */
+  margin: 0 auto;           /* center within the column */
+    display: flex;            /* center contents */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #8dafdd;
+  border-radius: 30px;
+  box-shadow: 10px 10px 20px #1752aa, -10px -10px 20px #3a4b68;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.category-card:hover {
+  box-shadow: inset 10px 10px 20px #1f5099,
+              inset -10px -10px 20px #ffffff;
+}
+.category-card i {
+  font-size: 1.6em;
+   margin: 0 0 8px;
+
+
+  }
+
+
+  .category-card span {
+  padding: 0 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.search-wrapper,
+.search-bar,
+.search-icon {
+  box-shadow: none !important;
+}
+
+.search-wrapper {
+  background: #fff;       /* give it a solid background if you need one */
+  border-radius: 30px;    /* keep your rounded corners */
+  overflow: hidden;
+}
+.category-card.selected {
+  background: #ff9800;
+  color: #fff;
+  box-shadow: inset 10px 10px 20px #c97c08,
+              inset -10px -10px 20px #ffffff;
+}
+
+.next-wrapper {
+  /* Remove fixed positioning entirely */
+  /* position: fixed; bottom: 20px; right: 20px; */
+
+  /* instead, give it some breathing room */
+  margin: 2rem 0;
+  text-align: center;    /* center the button horizontally */
+}
+
+.next-btn {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  margin-top: 20px;
+  /* FIXED SIZE */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;         /* एक समान width */
+  height: 48px;         /* एक समान height */
+  padding: 0;           /* ऊपर-नीचे padding अब नहीं चाहिए */
+  border-radius: 30px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  cursor: pointer;
+   transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.next-btn:hover {
+  background: #fb8c00;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+/* STEP 2 “No Sub category found” message को Step 1 की styling जैसा बनाएं */
+/* STEP 2 “No Sub category found” message को Step 1 की styling जैसा बनाएं */
+#noSubCatMsg p {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: -10px;
+  line-height: 1.2;
+}
+
+
+
+/* backdrop */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+/* modal container */
+.modal-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  max-width: 90%;
+  width: 320px;
+}
+
+/* modal styling */
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+/* ensure your gender buttons are wide enough */
+#step2Screen .neumorphic-button {
+  /* FIXED SIZE */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;        /* same as next-btn */
+  height: 68px;        /* same as next-btn */
+  padding: 0;          /* remove variable padding */
+  font-size: 1.1rem;     /* adjust if चाहें */
+  border-radius: 30px; /* या जितना पहले था */
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+@media (max-width: 576px) {
+  .neumorphic-button {
+    height: 80px;
+    font-size: 0.9rem;
+  }
+}
+
+/* 2_category.css के सबसे नीचे जोड़ें */
+#step3Form {
+  /* यानि कि वही element जिस पर दोनों id और class हों */
+  max-width: 400px;   /* अपनी पसंद से एडजस्ट करें */
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+/*  ————————————————————————————————————————————
+    NEW: Decorative background‑shape & shadow
+————————————————————————————————————————————— */
+/* STEP 3 WRAPPER & ITS DECORATION */
+.form-card {
+  position: relative;
+  background: #8dafdd;   /* आपकी neumorphic base रंग */
+  border-radius: 30px;
+  padding: 30px 20px;
+  max-width: 500px;         /* कभी भी 500px से बड़ा नहीं होगा */
+  width: 90%;   
+  margin: 30px auto;
+  box-shadow:
+    10px 10px 20px rgba(23,82,170,0.4),
+   -10px -10px 20px rgba(58,75,104,0.3);
+}
+
+.form-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("images/AshokChakra.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 440px 440px;
+  opacity: 0.06;
+  z-index: 0;
+}
+
+/* .form-card::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: #fff;    
+  border-radius: 50%;
+  box-shadow:
+    inset 8px 8px 16px rgba(23,82,170,0.2),
+   -8px -8px 16px rgba(58,75,104,0.2);
+  opacity: 0.15;
+  z-index: 0;
+} */
+
+/* ensure inputs and buttons sit above decorations */
+.form-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.file-button {
+  position: relative;
+  z-index: 1;
+  background-color: #2b7eeb;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 0;
+  display: inline-block;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background 0.3s;
+  font-family: "Poppins", sans-serif;
+}
+
+.file-button:hover {
+  background-color: #1e6ad0;
+}
+
+.file-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid #2b7eeb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.file-wrap input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-text {
+  padding: 0 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: #ff9933;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-submit:hover {
+  background: #cc7a29;
+}
+
+#cropped-preview {
+  display: none;
+  margin: 20px auto;
+  border-radius: 50%;
+}
+
+#continue-btn {
+  background: #ff9933;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#continue-btn:hover {
+  background: #cc7a29;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 70vw;
+  max-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.modal-content {
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-size: 1.5rem;
+  color: #ff9933;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: color 0.3s ease, background 0.3s ease;
+}
+.close-modal:hover {
+  background: #fff;
+  color: #cc7a29;
+}
+
+#modal-image-preview {
+  max-width: 100%;
+  max-height: 60vh;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.cropper-crop-box,
+.cropper-view-box {
+  border-radius: 50% !important;
+}
+
+/* अगर बची कोई inline style रही तो उसे हटा दें */
+#thankYouScreen {
+  /* background: none; */    /* सुनिश्चित करें background transparent हो */
+  padding-top: 0;            /* ऊपरी padding अब container से ही आएगी */
+}
+
+/* form-card का default neumorphic shadow हटाएँ जब thank you में यूज़ हो */
+#thankYouScreen .form-card {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* start-screen instruction */
+.start-instruction {
+  color: #fff;            /* आपकी थीम के अनुसार */
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+   margin-bottom: 1.5rem;       /* टेक्स्ट और बटन के बीच स्पेस */
+}
+
+/* step descriptions under progress */
+.step-description {
+  color: #fff;            /* या आपका ऑरेंज (#ff9800) भी रख सकते हैं */
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: -10px;
+}
+
+/* VIDEO POPUP */
+.video-modal-box {
+  background: #8dafdd;         /* आपके neumorphic base कलर से मैच */
+  padding: 1rem;
+  border-radius: 30px;
+  box-shadow: 10px 10px 20px rgba(23,82,170,0.4), -10px -10px 20px rgba(58,75,104,0.3);
+  max-width: 90%;
+  width: 600px;
+  position: relative;
+  max-height: 335px !important;
+}
+
+.video-modal-box video{
+  max-height: 300px !important;
+}
+#videoModal .modal-overlay {
+  display: flex !important;    /* override previous display:none */
+  justify-content: center;
+  align-items: center;
+}
+#subcatVideo {
+  width: 100%;
+  border-radius: 20px;
+}
+#closeVideoBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  font-size: 1.2rem;
+  color: #ff9933;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+#closeVideoBtn:hover {
+  background: #fff;
+  color: #cc7a29;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    max-width: 95vw;
+    padding: 10px;
+  }
+
+  #modal-image-preview {
+    max-height: 40vh;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    /* replace with your mobile‑size image path */
+    background-image: url("mobile.png");
+  }
+}
+

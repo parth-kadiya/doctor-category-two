@@ -1,0 +1,182 @@
+
+
+/* HIDDEN RADIO BUTTONS */
+input[name="form-toggle"] {
+  display: none;
+}
+
+/* Base neumorphic class */
+.neumorphic {
+  background: #8dafdd;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px #5e646d, -10px -10px 20px #ffffff;
+  border: none;
+  outline: none;
+}
+
+/* Card container and slider setup */
+.form-container {
+  width: 320px;
+  overflow: hidden;
+  padding: 0; /* we'll pad inside panels */
+}
+
+.form-slider {
+  display: flex;
+  width: 200%;
+  transition: transform 0.6s ease;
+}
+
+/* Slide control */
+#toggle-signup:checked ~ .form-container .form-slider {
+  transform: translateX(-50%);
+}
+#toggle-login:checked ~ .form-container .form-slider {
+  transform: translateX(0);
+}
+
+/* Each panel */
+.form-panel {
+  width: 50%;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+   justify-content: center;  /* vertical centering */
+  height: 100%;             /* पूरी उपलब्ध height घेरने के लिए */
+}
+
+/* Headings */
+.form-panel h1 {
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.auth-login-button,
+.auth-signup-button {
+  font-size: 0.85rem !important;  /* smaller text */
+  margin-top: 8px;  /* instead of 20px */
+  padding: 6px 12px; /* slightly slimmer */
+}
+.auth-signup-button {
+  margin-bottom: 7px !important;
+}
+/* Inputs */
+.neumorphic-input {
+  margin: 6px 0;
+  margin-top: 12px;
+  padding: 6px 10px;
+  width: 100%;
+  font-size: 0.85rem;
+  box-shadow: inset 10px 10px 20px #648fcf, inset -10px -10px 20px #ffffff;
+  border-radius: 12px;
+}
+
+/* Buttons */
+.neumorphic-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border-radius: 12px;
+}
+.neumorphic-button:hover {
+  box-shadow: inset 10px 10px 20px #a3b1c6, inset -10px -10px 20px #ffffff;
+}
+
+/* Toggle labels */
+.form-switch {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+  padding: 0;
+}
+.form-switch span {
+  color: #007bff;
+  text-decoration: underline;
+}
+.form-switch span:hover {
+  opacity: 0.8;
+}
+
+/* 2_category.css (या form.css में जोड़ें) */
+#step3Screen .container {
+  max-width: 400px;       /* अपनी पसंद के कद से एडजस्ट करें */
+  margin: 0 auto;         /* horizontal center */
+}
+
+#authContainer {
+  /* take it out of the document flow */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* shift back by half of its own width/height */
+  transform: translate(-50%, -50%);
+  /* ensure it sizes to your 320px card */
+  width: 300px;
+  /* allow its height to grow with content */
+  height: auto;
+  max-height: 95vh;
+  overflow: hidden;
+  /* optionally increase its z‑index above the background */
+  z-index: 100;
+}
+
+.form-control {
+  background-color: #dfd9ff !important;
+}
+
+#step3Screen small.error {
+  color: #dfd9ff !important;
+}
+
+
+.file-wrap {
+  margin: 6px 0 !important;
+  font-size: 0.8rem !important;
+  margin-top: 12px !important;
+}
+.file-button {
+  padding: 4px 8px !important;
+}
+.file-text {
+  padding: 0 6px !important;
+}
+#cropped-preview {
+ display: none;
+  margin: 20px auto;
+  border-radius: 50%;
+  width: 80px !important;
+  height: 80px !important;
+  margin-bottom: 0px !important;
+}
+
+/* 6) Tighter “Don’t have an account?” label */
+.form-switch {
+  font-size: 0.8rem !important;
+  margin-top: 6px !important;
+}
+.form-switch span {
+  font-size: 0.75rem !important;
+}
+
+/* 7) Ensure the slider won’t overflow */
+.form-slider {
+  height: auto !important;
+}
+
+/* 8) Remove any leftover overflow on panels */
+.form-panel, .form-container {
+  overflow: hidden !important;
+}
+
+.spelog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70vh; /* Ya jitna height chahiye */
+}
