@@ -121,11 +121,17 @@ input[name="form-toggle"] {
   /* allow its height to grow with content */
   height: auto;
   max-height: 95vh;
-  overflow: hidden;
+  overflow-y: auto !important;
   /* optionally increase its z‑index above the background */
   z-index: 100;
+  scrollbar-width: none !important;        /* hide scrollbar in Firefox */
+  /* IE10+ */
+  -ms-overflow-style: none !important;     /* hide scrollbar in IE and Edge */
 }
-
+#authContainer::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
+}
 .form-control {
   background-color: #dfd9ff !important;
 }
@@ -179,4 +185,14 @@ input[name="form-toggle"] {
   flex-direction: column;
   justify-content: center;
   min-height: 70vh; /* Ya jitna height chahiye */
+}
+
+small.error {
+  color: #e74c3c;      /* गहरा लाल */
+  font-size: 0.85rem;  /* थोड़ा छोटा */
+  margin-top: 4px;
+  display: block;
+}
+.d-none {
+  display: none !important;
 }

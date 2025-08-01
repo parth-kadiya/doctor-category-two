@@ -21,6 +21,8 @@
       rel="stylesheet"
     />
 
+    <link rel="icon" href="data:;base64,=">
+
     <link rel="stylesheet" href="cropper.min.css" />
 
     <!-- Your CSS file -->
@@ -41,6 +43,14 @@
 <h1>Login</h1>
 <form id="loginForm" novalidate>
   <input
+    type="text"
+    id="loginName"
+    class="neumorphic neumorphic-input"
+    placeholder="Name"
+  />
+  <small class="error d-none"></small>
+
+  <input
     type="email"
     id="loginEmail"
     class="neumorphic neumorphic-input"
@@ -48,18 +58,11 @@
   />
   <small class="error d-none"></small>
 
-  <input
-    type="password"
-    id="loginPassword"
-    class="neumorphic neumorphic-input"
-    placeholder="Password"
-  />
-  <small class="error d-none"></small>
-
   <button type="button" id="authLoginBtn" class="auth-login-button">
     Sign In
   </button>
 </form>
+
 </div>
 
         <label for="toggle-signup" class="form-switch">
@@ -557,54 +560,6 @@
     <script src="script.js"></script>
     <script src="2_.js"></script>
     <script>
-      function validateLogin() {
-  let valid = true;
-  [
-    { id: "loginEmail", msg: "Please enter your email" },
-    { id: "loginPassword", msg: "Please enter your password" }
-  ].forEach(f => {
-    const inp = document.getElementById(f.id),
-          err = inp.nextElementSibling;
-    if (!inp.value.trim()) {
-      err.textContent = f.msg;
-      err.classList.remove("d-none");
-      valid = false;
-    } else {
-      err.classList.add("d-none");
-    }
-  });
-  return valid;
-}
-authLoginBtn.addEventListener("click", () => {
-  if (validateLogin()) enterWizard();
-});
-
-function validateSignup() {
-  let valid = true;
-  [
-    { id: "signupName",        msg: "Please enter your name"        },
-    { id: "signupEmail",       msg: "Please enter your email"       },
-    { id: "signupPhone",       msg: "Please enter your phone"       },
-    { id: "signupPassword",    msg: "Please enter a password"       },
-    { id: "signupDesignation", msg: "Please enter your designation" },
-    { id: "signupClinic",      msg: "Please enter your clinic name" },
-    { id: "signupCity",        msg: "Please enter your city"        }
-  ].forEach(f => {
-    const inp = document.getElementById(f.id),
-          err = inp.nextElementSibling;
-    if (!inp.value.trim()) {
-      err.textContent = f.msg;
-      err.classList.remove("d-none");
-      valid = false;
-    } else {
-      err.classList.add("d-none");
-    }
-  });
-  return valid;
-}
-authSignupBtn.addEventListener("click", () => {
-  if (validateSignup()) enterWizard();
-});
 
     </script>
   </body>

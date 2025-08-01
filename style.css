@@ -395,18 +395,6 @@ body {
    -10px -10px 20px rgba(58,75,104,0.3);
 }
 
-.form-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("images/AshokChakra.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 440px 440px;
-  opacity: 0.06;
-  z-index: 0;
-}
-
 /* .form-card::after {
   content: "";
   position: absolute;
@@ -650,6 +638,12 @@ body {
   color: #cc7a29;
 }
 
+/* हमेशा full width के लिए, shrink रोकने के लिए */
+#loginForm .neumorphic-input,
+#signupForm .neumorphic-input {
+  width: 100% !important;
+  box-sizing: border-box;
+}
 
 @media (max-width: 600px) {
   .modal-content {

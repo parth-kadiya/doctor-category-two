@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const step1Screen    = document.getElementById("step1Screen");
   const step2Screen    = document.getElementById("step2Screen");
   const step3Screen    = document.getElementById("step3Screen");
-const screens = [step1Screen, step2Screen, step3Screen];
-
+const thankYouScreen = document.getElementById("thankYouScreen");
+ const screens = [ step1Screen, step2Screen, step3Screen, thankYouScreen ];
   // --- VIDEO SOURCES FOR SUB-CATEGORIES ---
 const subcatVideos = {
   "Type 1 Diabetes":      "Media/temp1.mp4",
@@ -74,10 +74,6 @@ function enterWizard() {
   currentStep = 0;
   goToStep(0);
 }
-
-// On successful Sign In or Sign Up:
-authLoginBtn.addEventListener("click", enterWizard);
-authSignupBtn.addEventListener("click", enterWizard);
 
 
 
@@ -386,6 +382,149 @@ function openVideoModal(key) {
   subcatVideo.load();
   videoModal.classList.remove("d-none");
 }
+
+// नीचे वाले code को script.js में कहीं भी DOMContentLoaded के अंदर रखें
+
+// --- UPDATED validateForm ---
+// --- UPDATED validateForm with phone validation ---
+function validateForm(formEl) {
+  let valid = true;
+
+  formEl.querySelectorAll("input").forEach(input => {
+    const errorEl = input.nextElementSibling || formEl.querySelector(".photo-error");
+    const value = input.value.trim();
+
+    // 1) File input चेक
+    if (input.type === "file") {
+      if (!input.files || input.files.length === 0) {
+        errorEl.textContent = "Please upload your photo";
+        valid = false;
+      } else {
+        errorEl.textContent = "";
+      }
+      return;
+    }
+
+    // 2) सभी fields required
+    if (!value) {
+      errorEl.textContent = `Please enter your ${input.placeholder}`;
+      errorEl.classList.remove("d-none");
+      valid = false;
+      return;
+    } else {
+      errorEl.textContent = "";
+      errorEl.classList.add("d-none");
+    }
+
+    // 3) Email validation
+    if (input.type === "email") {
+      const reEmail = /^\S+@\S+\.\S+$/;
+      if (!reEmail.test(value)) {
+        errorEl.textContent = "Please enter a valid email";
+        errorEl.classList.remove("d-none");
+        valid = false;
+      }
+    }
+
+    // 4) Phone validation (10 digits)
+    if (input.type === "tel") {
+      const rePhone = /^\d{10}$/;
+      if (!rePhone.test(value)) {
+        errorEl.textContent = "Please enter a valid 10-digit phone number";
+        errorEl.classList.remove("d-none");
+        valid = false;
+      }
+    }
+  });
+
+  return valid;
+}
+
+
+
+
+// realtime hide on typing and file-choose
+document.querySelectorAll("#loginForm input, #signupForm input").forEach(input => {
+  input.addEventListener("input", () => {
+    const err = input.nextElementSibling;
+    if (err) {
+      err.textContent = "";
+      err.classList.add("d-none");
+    }
+    // file case
+    if (input.type === "file") {
+      const photoError = input.closest("form").querySelector(".photo-error");
+      photoError.textContent = "";
+    }
+  });
+});
+
+
+
+// LOGIN validation
+authLoginBtn.addEventListener("click", event => {
+  event.preventDefault();
+  const loginForm = document.getElementById("loginForm");
+  if (validateForm(loginForm)) {
+    enterWizard();
+  }
+});
+
+// SIGNUP validation
+authSignupBtn.addEventListener("click", event => {
+  event.preventDefault();
+  const signupForm = document.getElementById("signupForm");
+  if (validateForm(signupForm)) {
+    enterWizard();
+  }
+});
+
+  const authContainer = document.getElementById("authContainer");
+  const signupToggle  = document.getElementById("toggle-signup");
+
+  // Helper: क्या अभी Register पैनल दिख रहा?
+  function isSignupVisible() {
+    return signupToggle.checked;
+  }
+
+  // व्हील इवेंट हैंडलर
+  function onWheel(e) {
+    if (!isSignupVisible()) return;    // सिर्फ Register में ही खाना है
+    e.preventDefault();                // default body-scroll रोको
+    authContainer.scrollTop += e.deltaY;
+  }
+
+  // टच-स्क्रॉल हैंडलर (vertical पिन्च/स्वाइप)
+  let lastTouchY = null;
+  function onTouchStart(e) {
+    if (!isSignupVisible()) return;
+    lastTouchY = e.touches[0].clientY;
+  }
+  function onTouchMove(e) {
+    if (!isSignupVisible() || lastTouchY === null) return;
+    e.preventDefault();
+    const currentY = e.touches[0].clientY;
+    const deltaY   = lastTouchY - currentY;
+    authContainer.scrollTop += deltaY;
+    lastTouchY = currentY;
+  }
+  function onTouchEnd() {
+    lastTouchY = null;
+  }
+
+  // इवेंट्स बाइंड करें
+  window.addEventListener("wheel", onWheel, { passive: false });
+  window.addEventListener("touchstart", onTouchStart, { passive: false });
+  window.addEventListener("touchmove",  onTouchMove,  { passive: false });
+  window.addEventListener("touchend",   onTouchEnd);
+
+  // अगर आप जहां भी toggle करते हैं वहाँ instant स्क्रॉल पोजीशन रीसेट करना चाहें:
+  signupToggle.addEventListener("change", () => {
+    if (isSignupVisible()) {
+      // Register खुलते ही ऊपर से शुरू
+      authContainer.scrollTop = 0;
+    }
+  });
 
 });
 
